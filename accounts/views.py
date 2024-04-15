@@ -20,7 +20,6 @@ class UserRegisterView(View):
         if form.is_valid():
             random_code = random.randint(1000, 9999)
             send_otp_code(form.cleaned_data['phone'], random_code)
-            print(form.cleaned_data['phone'], random_code)
             OtpCode.objects.create(
                 phone_number=form.cleaned_data['phone'],
                 code=random_code
