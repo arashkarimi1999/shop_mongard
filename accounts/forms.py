@@ -56,3 +56,7 @@ class UserRegisterationForm(forms.Form):
             raise ValidationError('this phone number already exists.')
         return phone
 
+
+class VerifyCodeForm(forms.Form):
+    code = forms.IntegerField()
+
