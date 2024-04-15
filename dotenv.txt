@@ -1,0 +1,6 @@
+
+SECRET_KEY=
+DEBUG=True
+
+# Kavenegar api
+KAVENEGAR_API=
