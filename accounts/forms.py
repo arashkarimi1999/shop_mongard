@@ -26,6 +26,7 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
+
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField(
         help_text='you can change password using <a href="../password/">this form</a>.'
@@ -59,4 +60,17 @@ class UserRegisterationForm(forms.Form):
 
 class VerifyCodeForm(forms.Form):
     code = forms.IntegerField()
+
+
+class UserLoginForm(forms.Form):
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={"class":"form-control"}
+        )
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class":"form-control"}
+        )
+    )
 
