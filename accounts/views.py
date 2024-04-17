@@ -16,6 +16,11 @@ class UserRegisterView(View):
     form_class = UserRegisterationForm
     template_name = 'accounts/register.html'
 
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if request.user.is_authenticated:
+            return redirect("home:home")
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
         form = self.form_class
         return render(request, self.template_name, {'form': form})
@@ -42,6 +47,11 @@ class UserRegisterView(View):
 
 class UserRegisterVerifyCodeView(View):
     form_class = VerifyCodeForm
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if request.user.is_authenticated:
+            return redirect("home:home")
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
         form = self.form_class
@@ -103,6 +113,11 @@ class UserLoginView(View):
 
 class UserLoginVerifyCodeView(View):
     form_class = VerifyCodeForm
+
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if request.user.is_authenticated:
+            return redirect("home:home")
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
         form = self.form_class
