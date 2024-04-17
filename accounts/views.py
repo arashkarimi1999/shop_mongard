@@ -10,6 +10,7 @@ from django.http.request import HttpRequest
 from typing import Any
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 
 class UserRegisterView(View):
@@ -103,7 +104,8 @@ class UserLoginView(View):
             )
             request.session['user_login_info'] = {
                 'phone_number': form.cleaned_data['phone'],
-                'password': form.cleaned_data['password']
+                'password': form.cleaned_data['password'],
+                'next': request.GET.get("next", reverse("home:home"))
             }
             messages.success(request, 'we sent you a code.', 'success')
             return redirect('accounts:verify_login_code')
@@ -135,7 +137,7 @@ class UserLoginVerifyCodeView(View):
                     login(request, user)
                     code_instanse.delete()
                     messages.success(request, "You logged in successfully", 'success')
-                    return redirect("home:home")
+                    return redirect(user_session.pop('next', reverse("home:home")))
                 else:
                     messages.error(request, "username or password is wrong", 'warning')
                     return redirect("accounts:user_login")
